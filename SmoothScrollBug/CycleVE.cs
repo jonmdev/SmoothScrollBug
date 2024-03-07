@@ -20,8 +20,14 @@ namespace SmoothScrollBug {
         List<string> aboutProduct = new() { "This is a good product", "Everyone loves this product", "You should buy this product", "Get more of this", "Buy this one too" };
         List<string> photoList = new() { "photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg" };
         public CycleVE() {
+
             photoBorder = new();
             photo = new();
+
+            //FreezeBehavior photoFreeze = new();
+            //photo.Behaviors.Add(photoFreeze);
+            //photo.freezeView();
+
             titleLabel = new();
             bodyLabel = new();
             dateLabel = new();
@@ -38,12 +44,14 @@ namespace SmoothScrollBug {
             photoBorder.StrokeShape = new RoundRectangle() { CornerRadius = 15 };
             photoBorder.StrokeThickness = 5;
             photoBorder.Stroke = Colors.White;
-            //photoBorder.Padding = 5;
 
             screenSizeChanged();
             ScreenSizeMonitor.Instance.ScreenSizeChanged += delegate {
                 screenSizeChanged();
             };
+            FreezeBehavior freezeVE = new();
+            this.Behaviors.Add(freezeVE);
+            freezeVE.freezeView();
         }
         public void screenSizeChanged() {
             if (ScreenSizeMonitor.Instance.screenSize != this.screenSize) {
@@ -61,24 +69,28 @@ namespace SmoothScrollBug {
                 photo.WidthRequest = photoSize;
 
                 this.WidthRequest = screenSize.Width;
-                this.HeightRequest = new Random().Next(40) + 80;
+                this.HeightRequest = Random.Shared.Next(40) + 80;
 
                 priceLabel.TranslationX = screenSize.Width *0.75;
                 bodyLabel.TranslationX = photoSize + 10;
                 titleLabel.TranslationX = photoSize + 10;
-                bodyLabel.TranslationY = 20 + new Random().Next(5);
+                bodyLabel.TranslationY = 20 + Random.Shared.Next(5);
             }
             
         }
+        bool photoLoaded = false;
         public void updateData() {
-            priceLabel.Text = "$" + new Random().Next(10000);
-            bodyLabel.Text = aboutProduct[new Random().Next(aboutProduct.Count())];
-            titleLabel.Text = titleList[new Random().Next(titleList.Count())];
+            priceLabel.Text = "$" + Random.Shared.Next(10000);
+            bodyLabel.Text = aboutProduct[Random.Shared.Next(aboutProduct.Count())];
+            titleLabel.Text = titleList[Random.Shared.Next(titleList.Count())];
 
-            photo.Source = photoList[new Random().Next(photoList.Count())];
+            if (!photoLoaded) {
+                photo.Source = photoList[Random.Shared.Next(photoList.Count())];
+                photoLoaded = true;
+            }
             configurePositions();
 
-            Debug.WriteLine("UPDATED DATA " + new Random().Next(10000));
+            //Debug.WriteLine("UPDATED DATA " + Random.Shared.Next(10000));
         }
     }
 }

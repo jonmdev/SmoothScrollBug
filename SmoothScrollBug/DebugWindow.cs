@@ -28,7 +28,7 @@ namespace SmoothScrollBug {
 
         private List<DebugLabel> labels = new();
         double lineSpacing = 40;
-        int numLabels = 8;
+        int numLabels = 4;
         int currentIndex = 0;
         Size screenSize = new Size(-1, -1);
         private DebugWindow() {
@@ -49,10 +49,15 @@ namespace SmoothScrollBug {
         }
         public void addMessage(string msg) {
 
-            //need oldest at top (descending)
-            labels.Sort((x, y) => x.lastEditTime.CompareTo(y.lastEditTime)); //https://stackoverflow.com/questions/3309188/how-to-sort-a-listt-by-a-property-in-the-object
+            //update first label (should be oldest, now newest)
             labels[0].label.Text = msg;
             labels[0].lastEditTime = DateTime.Now;
+
+            //resort oldest at top (descending)
+            //labels.Sort((x, y) => y.lastEditTime.CompareTo(x.lastEditTime)); //https://stackoverflow.com/questions/3309188/how-to-sort-a-listt-by-a-property-in-the-object
+
+            //or resort newest at top:
+            labels.Sort((x, y) => x.lastEditTime.CompareTo(y.lastEditTime)); //https://stackoverflow.com/questions/3309188/how-to-sort-a-listt-by-a-property-in-the-object
 
             //can move to subscribe to screen size monitor change
             if (screenSize != ScreenSizeMonitor.Instance.screenSize) {
