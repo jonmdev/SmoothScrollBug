@@ -101,15 +101,11 @@ namespace SmoothScrollBug {
             dbgUpdateTimer++;
             if (dbgUpdateTimer > 100) {
                 dbgUpdateTimer = 0;
-                DebugWindow.Instance.addMessage(debugMsg);
+                //DebugWindow.Instance.addMessage(debugMsg);
                 if (cycleVE.Count > 0) {
                     cycleVE[0].updateData();
                 }
             }
-            //Debug.WriteLine("DURATION OF UPDATE " + stopwatch.Elapsed.Milliseconds + " ms");
-            //Debug.WriteLine("DURATION OF UPDATE " + stopwatch.Elapsed.Ticks + " ticks");
-            //Debug.WriteLine("FPS OF UPDATE " + 1/stopwatch.Elapsed.TotalSeconds + " fps");
-            //DebugWindow.Instance.addMessage("FPS OF STOPWATCH " + Math.Round(1 / stopwatch.Elapsed.TotalSeconds) + " fps \n" + "FPS OF DELTA TIME + " + Math.Round(1 / averageDeltaTime));
         }
 
         //=======================

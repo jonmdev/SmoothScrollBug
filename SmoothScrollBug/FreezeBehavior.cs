@@ -38,6 +38,7 @@ namespace SmoothScrollBug {
                 if (view != null && view.Handler != null && view.Handler.MauiContext != null) {
                     androidView = view.ToPlatform(view.Handler.MauiContext);
                     Debug.WriteLine("FREEZE MONITOR HANDLER FINISHED || IS HARDWARE ACCELERATED? " + androidView.IsHardwareAccelerated);
+                    DebugWindow.Instance.addMessage("HARDWARE ACCEL ENABLED? " + androidView.IsHardwareAccelerated);
                     updateFreezeStatus();
                     view.HandlerChanged -= monitorHandler;
                 }
